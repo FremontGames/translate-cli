@@ -54,7 +54,7 @@ public class All {
 		};
 		String file;
 		List<String[]> data = new ArrayList<>();
-		file = path + "\\..\\Project 2048 Cars\\Assets\\Project 2048\\Resources\\i18n\\locale-%s.json";
+		file = path + "\\..\\project-2048\\Project 2048 Cars\\Assets\\Project 2048\\Resources\\i18n\\locale-%s.json";
 		for (int i = 0; i < targets.length; i++) {
 			String target = targets[i];
 			data.add(new String[] { //
