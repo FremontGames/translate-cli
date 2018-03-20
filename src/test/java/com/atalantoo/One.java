@@ -11,9 +11,9 @@ public class One {
 	public void generate() throws Exception {
 		String ts = String.valueOf(Math.random() * 999999);
 		String path = System.getProperty("user.dir");
-		String file = path + "\\..\\Project 2048 Cars\\Assets\\Project 2048\\Resources\\i18n\\locale-%s.json";
+		String file = path + "\\..\\project-2048\\Project 2048\\Assets\\Project 2048\\Resources\\i18n\\locale-%s.json";
 		String src_lang = "en";
-		String dest_lang= "de";
+		String dest_lang= "it";
 		assertThat(SpringApplication.exit(SpringApplication.run(BatchConfig.class,
 				new String[] { //
 						"--run.id=" + ts, //

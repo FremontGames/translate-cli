@@ -64,7 +64,7 @@ public class All {
 					source, //
 					target });
 		}
-		file= path + "\\..\\project-2048\\resources\\stores\\locale-%s.json";
+		file= path + "\\..\\project-2048\\resources\\social-bikes\\stores\\locale-%s.json";
 		for (int i = 0; i < targets.length; i++) {
 			String target = targets[i];
 			data.add(new String[] { //

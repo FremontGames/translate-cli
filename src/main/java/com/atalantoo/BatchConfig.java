@@ -1,5 +1,8 @@
 package com.atalantoo;
 
+import com.atalantoo.translator.GoogleUIPhantomJS;
+import com.atalantoo.translator.GoogleUIWithToken;
+import com.atalantoo.translator.Translator;
 import org.openqa.selenium.WebDriverException;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -62,8 +65,10 @@ public class BatchConfig {
 
 	// CUSTOM *********************************************************
 
+	public Translator translator = new GoogleUIPhantomJS("phantomjs-2.1.1-windows/bin/phantomjs.exe");
+
 	public TranslateProcessor processor(String src_lang, String dest_lang) {
-		return new TranslateProcessor(src_lang, dest_lang);
+		return new TranslateProcessor(src_lang, dest_lang, translator);
 	}
 
 	// GENERIC *********************************************************
