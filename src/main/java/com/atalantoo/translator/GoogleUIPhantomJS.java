@@ -40,6 +40,8 @@ public class GoogleUIPhantomJS implements Translator {
             WebElement target = webDriver.findElement(By.cssSelector(GOOGLE_HTML_TARGET));
             String newValue = target.getText();
 
+            webDriver.quit();
+
             return newValue;
 
         } catch (Exception e) {
