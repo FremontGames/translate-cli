@@ -65,7 +65,8 @@ public class BatchConfig {
 
 	// CUSTOM *********************************************************
 
-	public Translator translator = new GoogleUIPhantomJS("phantomjs-2.1.1-windows/bin/phantomjs.exe");
+	@Autowired
+	GoogleUIPhantomJS translator;
 
 	public TranslateProcessor processor(String src_lang, String dest_lang) {
 		return new TranslateProcessor(src_lang, dest_lang, translator);
