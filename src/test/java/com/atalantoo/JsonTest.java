@@ -12,7 +12,7 @@ public class JsonTest {
 	@Test
 	public void json_from_en_to_fr() throws Exception {
 		String[] args = new String[] { //
-				"--file", //
+				"--mode=json", //
 				"--input=" + "src/test/resources/test-json_from_en_to_fr-input.json", //
 				"--output=" + "target/test-json_from_en_to_fr-output.json", //
 				"--input-lang=" + "en", //
