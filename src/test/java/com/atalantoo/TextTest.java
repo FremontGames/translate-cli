@@ -10,7 +10,7 @@ import org.springframework.boot.SpringApplication;
 public class TextTest {
 
 	@Test
-	public void json_from_en_to_fr() throws Exception {
+	public void text_from_en_to_fr() throws Exception {
 		String[] args = new String[] { //
 				"--mode=text", //
 				"--input=" + "src/test/resources/test-text_from_en_to_fr-input.txt", //

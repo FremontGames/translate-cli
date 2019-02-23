@@ -20,6 +20,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.FileSystemResource;
 
+import com.atalantoo.html.HtmlTranslateProcessor;
+import com.atalantoo.html2text.Html2TextTranslateProcessor;
 import com.atalantoo.json.JSONTranslateProcessor;
 import com.atalantoo.json.LocaleJSONFooter;
 import com.atalantoo.json.LocaleJSONHeader;
@@ -62,7 +64,13 @@ public class BatchConfig {
 
 	@Bean
 	Step translateStep() {
-		return isModeJSON() ? jsonTranslateStep() : textTranslateStep();
+		if(isModeJSON())
+			return jsonTranslateStep();
+		if(isModeHTML())
+			return htmlTranslateStep();
+		if(isModeHTML2TEXT())
+			return html2textTranslateStep();
+		return textTranslateStep();
 	}
 
 	@Autowired
@@ -75,36 +83,27 @@ public class BatchConfig {
 		return (mode != null) && (mode.toLowerCase().equals("json"));
 	}
 
+	private boolean isModeHTML() {
+		return (mode != null) && (mode.toLowerCase().equals("html"));
+	}
+	private boolean isModeHTML2TEXT() {
+		return (mode != null) && (mode.toLowerCase().equals("html2text"));
+	}
+
 	// TEXT *********************************************************
 
 	Step textTranslateStep() {
 		System.out.println("using text mode");
 		return steps.get("translate").<String, String>chunk(1) //
-				.reader(textReader(input)) //
+				.reader(rawReader(input)) //
 				.processor(textProcessor(input_lang, output_lang)) //
-				.writer(textWriter(output)) //
+				.writer(rawWriter(output)) //
 				.faultTolerant().retry(WebDriverException.class).retryLimit(5) //
 				.build();
 	}
 
 	public ItemProcessor<String, String> textProcessor(String input_lang, String output_lang) {
 		return new TextTranslateProcessor(input_lang, output_lang, translator);
-	}
-
-	private ItemReader<String> textReader(String input) {
-		FlatFileItemReader<String> reader = new FlatFileItemReader<>();
-		LineMapper<String> mapper = new TextLineMapper();
-		reader.setResource(new FileSystemResource(input));
-		reader.setLineMapper(mapper);
-		return reader;
-	}
-
-	private ItemWriter<String> textWriter(String output) {
-		FlatFileItemWriter<String> w = new FlatFileItemWriter<>();
-		LineAggregator<String> aggregator = new TextLineAggregator();
-		w.setResource(new FileSystemResource(output));
-		w.setLineAggregator(aggregator);
-		return w;
 	}
 
 	// JSON *********************************************************
@@ -144,5 +143,54 @@ public class BatchConfig {
 		w.setFooterCallback(new LocaleJSONFooter());
 		return w;
 	}
+	
+	// HTML 2 TEXT *********************************************************
 
+	Step html2textTranslateStep() {
+		System.out.println("using html mode");
+		return steps.get("translate").<String, String>chunk(1) //
+				.reader(rawReader(input)) //
+				.processor(html2textProcessor(input_lang, output_lang)) //
+				.writer(rawWriter(output)) //
+				.faultTolerant().retry(WebDriverException.class).retryLimit(5) //
+				.build();
+	}
+
+	public ItemProcessor<String, String> html2textProcessor(String input_lang, String output_lang) {
+		return new Html2TextTranslateProcessor(input_lang, output_lang, translator);
+	}
+	
+	// HTML *********************************************************
+
+	Step htmlTranslateStep() {
+		System.out.println("using html mode");
+		return steps.get("translate").<String, String>chunk(1) //
+				.reader(rawReader(input)) //
+				.processor(htmlProcessor(input_lang, output_lang)) //
+				.writer(rawWriter(output)) //
+				.faultTolerant().retry(WebDriverException.class).retryLimit(5) //
+				.build();
+	}
+
+	public ItemProcessor<String, String> htmlProcessor(String input_lang, String output_lang) {
+		return new HtmlTranslateProcessor(input_lang, output_lang, translator);
+	}
+	
+	// COMMON *********************************************************
+	
+	private ItemReader<String> rawReader(String input) {
+		FlatFileItemReader<String> reader = new FlatFileItemReader<>();
+		LineMapper<String> mapper = new TextLineMapper();
+		reader.setResource(new FileSystemResource(input));
+		reader.setLineMapper(mapper);
+		return reader;
+	}
+
+	private ItemWriter<String> rawWriter(String output) {
+		FlatFileItemWriter<String> w = new FlatFileItemWriter<>();
+		LineAggregator<String> aggregator = new TextLineAggregator();
+		w.setResource(new FileSystemResource(output));
+		w.setLineAggregator(aggregator);
+		return w;
+	}
 }
