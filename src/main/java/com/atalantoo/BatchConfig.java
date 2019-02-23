@@ -31,14 +31,14 @@ import com.atalantoo.translator.GoogleUIPhantomJS;
 public class BatchConfig {
 
 	// ARGS *********************************************************
-	@Value("${src}")
-	String src;
-	@Value("${dest}")
-	String dest;
-	@Value("${src_lang}")
-	String src_lang;
-	@Value("${dest_lang}")
-	String dest_lang;
+	@Value("${input}")
+	String input;
+	@Value("${output}")
+	String output;
+	@Value("${input-lang}")
+	String input_lang;
+	@Value("${output-lang}")
+	String output_lang;
 
 	// IMPL *********************************************************
 
@@ -59,9 +59,9 @@ public class BatchConfig {
 	@Bean
 	Step translateStep() {
 		return steps.get("translate").<LocaleJSONLine, LocaleJSONLine> chunk(1) //
-				.reader(reader(src)) //
-				.processor(processor(src_lang, dest_lang)) //
-				.writer(writer(dest)) //
+				.reader(reader(input)) //
+				.processor(processor(input_lang, output_lang)) //
+				.writer(writer(output)) //
 				.faultTolerant().retry(WebDriverException.class).retryLimit(5) //
 				.build();
 	}
@@ -71,16 +71,16 @@ public class BatchConfig {
 	@Autowired
 	GoogleUIPhantomJS translator;
 
-	public TranslateProcessor processor(String src_lang, String dest_lang) {
-		return new TranslateProcessor(src_lang, dest_lang, translator);
+	public TranslateProcessor processor(String input_lang, String output_lang) {
+		return new TranslateProcessor(input_lang, output_lang, translator);
 	}
 
 	// GENERIC *********************************************************
 
-	private ItemReader<LocaleJSONLine> reader(String src) {
+	private ItemReader<LocaleJSONLine> reader(String input) {
 		LineMapper<LocaleJSONLine> mapper = new LocaleJSONLineMapper();
 		FlatFileItemReader<LocaleJSONLine> reader = new FlatFileItemReader<>();
-		reader.setResource(new FileSystemResource(src));
+		reader.setResource(new FileSystemResource(input));
 		reader.setStrict(false);
 		reader.setLineMapper(mapper);
 		reader.open(new ExecutionContext());
@@ -88,10 +88,10 @@ public class BatchConfig {
 		return reader;
 	}
 
-	private ItemWriter<LocaleJSONLine> writer(String dest) {
+	private ItemWriter<LocaleJSONLine> writer(String output) {
 		LineAggregator<LocaleJSONLine> aggregator = new LocaleJSONLineAggregator();
 		FlatFileItemWriter<LocaleJSONLine> w = new FlatFileItemWriter<>();
-		w.setResource(new FileSystemResource(dest));
+		w.setResource(new FileSystemResource(output));
 		w.setShouldDeleteIfEmpty(true);
 		w.setLineAggregator(aggregator);
 		w.setHeaderCallback(new LocaleJSONHeader());

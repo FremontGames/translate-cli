@@ -1,0 +1,8 @@
+{
+  "YES" : "Yes",
+  "NO" : "No",
+  "CLOSE" : "Close",
+  "NEXT_LEVEL" : "Next level",
+  "BEGINNER" : "Beginner",
+  "QUITDIALOG_BODY" : "Do you really want to quit this application? \n The current game will not be saved.",
+}

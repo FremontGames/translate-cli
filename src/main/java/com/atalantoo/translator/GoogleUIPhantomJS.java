@@ -2,7 +2,9 @@ package com.atalantoo.translator;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
@@ -23,37 +25,77 @@ import com.google.common.collect.ImmutableMap;
 public class GoogleUIPhantomJS implements Translator {
 
 	String phantomJsAbsolutePath = "phantomjs-2.1.1-windows/bin/phantomjs.exe";
-	String GOOGLE_URL_PATTERN = "https://translate.google.fr/#%s/%s/%s";
-	String GOOGLE_HTML_TARGET = ".translation";
+	String URL_PATTERN = "https://translate.google.fr/#%s/%s/%s";
+	String HTML_OUTPUT = ".translation";
+	String GENDERED = ".gendered-translations";
+	String ERROR_FILE = "translator-error-%s.png";
 
-	public String translate(String value, String srcLang, String destLang) {
-		try (PhantomJSDriverClosable webDriver = initWebDriver()) {
-
+	public String translate(String text, String  inputLang, String outputLang) {
+		try (PhantomJSDriverClosable webdriver = initWebDriver()) {
 			try {
-				String urlValue = URLEncoder.encode(value, "UTF-8");
-				String url = String.format(GOOGLE_URL_PATTERN, srcLang, destLang, urlValue);
-
-				webDriver.get(url);
-				WebDriverWait wait = new WebDriverWait(webDriver, 5);
-
-				wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(GOOGLE_HTML_TARGET)));
-				WebElement target = webDriver.findElement(By.cssSelector(GOOGLE_HTML_TARGET));
-				String newValue = target.getText();
-
-				System.out.println(value+"="+newValue);
-				
-				return newValue;
+				goToPage(webdriver, text, inputLang, outputLang);
+				List<WebElement> translations = getTranslations(webdriver);
+				checkNotEmpty(translations);
+				String outputText;
+				outputText = defaultText(translations);
+				if (hasMoreThanOne(translations) && hasGender(webdriver))
+					outputText = secondText(translations);
+				log(text, outputText);
+				return outputText;
 			} catch (Exception e) {
-				try {
-					File scrFile = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
-					long ts = System.currentTimeMillis();
-					FileUtils.copyFile(scrFile, new File("translator-error-"+ts+".png"));
-				} catch (IOException e1) {
-					throw new RuntimeException(e);
-				}
+				takeScreenshot(webdriver, e);
 				throw new RuntimeException(e);
 			}
 		}
+	}
+
+	private String secondText(List<WebElement> trans) {
+		return trans.get(1).getText();
+	}
+
+	private String defaultText(List<WebElement> trans) {
+		return trans.get(0).getText();
+	}
+
+	private boolean hasMoreThanOne(List<WebElement> trans) {
+		return trans.size() > 1;
+	}
+
+	private boolean hasGender(PhantomJSDriverClosable webdriver) {
+		WebElement gender = webdriver.findElement(By.cssSelector(GENDERED));
+		return (gender != null);
+	}
+
+	private void checkNotEmpty(List<WebElement> trans) {
+		if (trans.size() == 0)
+			throw new RuntimeException("not found");
+	}
+
+	private List<WebElement> getTranslations(PhantomJSDriverClosable webDriver) {
+		return webDriver.findElements(By.cssSelector(HTML_OUTPUT));
+	}
+
+	private void log(String value, String newValue) {
+		System.out.println(value + "=" + newValue);
+	}
+
+	private void takeScreenshot(PhantomJSDriverClosable webDriver, Exception e) {
+		try {
+			File scrFile = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
+			long ts = System.currentTimeMillis();
+			FileUtils.copyFile(scrFile, new File(String.format(ERROR_FILE, "" + ts)));
+		} catch (IOException e1) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private void goToPage(PhantomJSDriverClosable webDriver, String value, String srcLang, String destLang)
+			throws UnsupportedEncodingException {
+		String urlValue = URLEncoder.encode(value, "UTF-8");
+		String url = String.format(URL_PATTERN, srcLang, destLang, urlValue);
+		webDriver.get(url);
+		WebDriverWait wait = new WebDriverWait(webDriver, 5);
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(HTML_OUTPUT)));
 	}
 
 	class PhantomJSDriverClosable extends PhantomJSDriver implements AutoCloseable {
