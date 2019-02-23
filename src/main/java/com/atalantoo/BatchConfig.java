@@ -19,6 +19,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.FileSystemResource;
 
+import com.atalantoo.json.LocaleJSONFooter;
+import com.atalantoo.json.LocaleJSONHeader;
+import com.atalantoo.json.LocaleJSONLine;
+import com.atalantoo.json.LocaleJSONLineAggregator;
+import com.atalantoo.json.LocaleJSONLineMapper;
 import com.atalantoo.translator.GoogleUIPhantomJS;
 
 @SpringBootApplication
@@ -26,8 +31,6 @@ import com.atalantoo.translator.GoogleUIPhantomJS;
 public class BatchConfig {
 
 	// ARGS *********************************************************
-	@Value("${run.id}")
-	String id;
 	@Value("${src}")
 	String src;
 	@Value("${dest}")
@@ -44,7 +47,8 @@ public class BatchConfig {
 
 	@Bean
 	Job job() {
-		return jobs.get(id) //
+		String jobId = String.valueOf(Math.random() * 999999);
+		return jobs.get(jobId) //
 				.start(translateStep()) //
 				.build();
 	}

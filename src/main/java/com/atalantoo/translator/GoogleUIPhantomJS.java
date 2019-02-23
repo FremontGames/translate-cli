@@ -47,7 +47,7 @@ public class GoogleUIPhantomJS implements Translator {
 				try {
 					File scrFile = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
 					long ts = System.currentTimeMillis();
-					FileUtils.copyFile(scrFile, new File("language-translator-error-"+ts+".png"));
+					FileUtils.copyFile(scrFile, new File("translator-error-"+ts+".png"));
 				} catch (IOException e1) {
 					throw new RuntimeException(e);
 				}

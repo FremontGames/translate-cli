@@ -12,7 +12,6 @@ public class JsonTest {
 	@Test
 	public void json_from_en_to_it() throws Exception {
 		String[] args = new String[] { //
-				"--run.id=" + String.valueOf(Math.random() * 999999), //
 				"--src=" + "src/test/resources/test-json_from_en_to_it-input.json", //
 				"--dest=" + "target/test-json_from_en_to_it-output.json", //
 				"--src_lang=" + "en", //
