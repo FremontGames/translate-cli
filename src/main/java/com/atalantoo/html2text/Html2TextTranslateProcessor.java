@@ -28,6 +28,8 @@ public class Html2TextTranslateProcessor implements ItemProcessor<String, String
 				.replaceAll("<span class = \"notranslate\"> ", "") //
 				.replaceAll("<span class=\"notranslate\">", "") //
 				.replaceAll("<span class = \"notranslate\">", "") //
+				.replaceAll("<span class =“notranslate”>", "") //
+				.replaceAll("<span class =“notranslate”> ", "") //
 				.replaceAll("</ span> ", "") //
 				.replaceAll("</ span>", "") //
 				.replaceAll("</span>", "");
