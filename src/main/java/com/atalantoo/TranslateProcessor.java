@@ -1,30 +1,28 @@
 package com.atalantoo;
 
-import com.atalantoo.translator.Translator;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.batch.item.ItemProcessor;
 
+import com.atalantoo.translator.Translator;
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-
-@Data
-@RequiredArgsConstructor
 public class TranslateProcessor implements ItemProcessor<LocaleJSONLine, LocaleJSONLine> {
 
-	@NonNull
-	public String src_lang;
-	@NonNull
-	public String dest_lang;
-	@NonNull
-	public Translator translator;
+	String src_lang;
+	String dest_lang;
+	Translator translator;
 
-	private static final String LINE_BREAK = "\\n";
-	private static final String LINE_BREAK_REGEX = "\\\\n";
-	private static Joiner joiner = Joiner.on(LINE_BREAK).skipNulls();
+	static final String LINE_BREAK = "\\n";
+	static final String LINE_BREAK_REGEX = "\\\\n";
+	static Joiner joiner = Joiner.on(LINE_BREAK).skipNulls();
+
+	public TranslateProcessor(String src_lang, String dest_lang, Translator translator) {
+		super();
+		this.src_lang = src_lang;
+		this.dest_lang = dest_lang;
+		this.translator = translator;
+	}
 
 	@Override
 	public LocaleJSONLine process(LocaleJSONLine item) throws Exception {
@@ -41,7 +39,6 @@ public class TranslateProcessor implements ItemProcessor<LocaleJSONLine, LocaleJ
 		} else {
 			newValue = translator.translate(item.value, src_lang, dest_lang);
 		}
-
 		return new LocaleJSONLine(item.key, newValue);
 	}
 

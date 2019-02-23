@@ -1,8 +1,5 @@
 package com.atalantoo;
 
-import com.atalantoo.translator.GoogleUIPhantomJS;
-import com.atalantoo.translator.GoogleUIWithToken;
-import com.atalantoo.translator.Translator;
 import org.openqa.selenium.WebDriverException;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -21,6 +18,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.FileSystemResource;
+
+import com.atalantoo.translator.GoogleUIPhantomJS;
 
 @SpringBootApplication
 @EnableBatchProcessing

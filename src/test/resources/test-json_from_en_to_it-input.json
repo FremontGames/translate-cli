@@ -1,0 +1,6 @@
+{
+  "YES" : "Yes",
+  "NO" : "No",
+  "CLOSE" : "Close",
+  "QUITDIALOG_BODY" : "Do you really want to quit? \n The current game will not be saved.",
+}

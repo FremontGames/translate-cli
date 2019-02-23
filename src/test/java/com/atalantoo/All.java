@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -77,6 +78,7 @@ public class All {
 		return new ArrayList<Object[]>(data);
 	}
 
+	@Ignore
 	@Test
 	public void generate() throws Exception {
 		String ts = String.valueOf(Math.random() * 999999);
