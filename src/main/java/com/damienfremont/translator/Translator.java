@@ -1,4 +1,4 @@
-package com.atalantoo.translator;
+package com.damienfremont.translator;
 
 public interface Translator {
 

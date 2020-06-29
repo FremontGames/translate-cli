@@ -1,4 +1,4 @@
-package com.atalantoo;
+package com.damienfremont;
 import org.springframework.boot.SpringApplication;
 
 public class BatchApplication {

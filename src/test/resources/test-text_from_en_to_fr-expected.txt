@@ -1,15 +1,14 @@
-Cars2048 - Jeu de réflexion
+Cars2048 - Puzzle Game
 ---
 Faites glisser pour déplacer des pièces et créer des voitures!
 ---
 C'est un jeu amusant et facile à jouer.
 
-Glissez pour déplacer les pièces des voitures et assemblez-les pour créer de nouvelles voitures. Il y a plusieurs niveaux et voitures. Débloquez-les tous ...
+Faites glisser pour déplacer les pièces des voitures et assemblez-les pour créer de nouvelles voitures. Il y a plusieurs niveaux et voitures. Déverrouillez-les tous ...
 
-Gameplay simple et défis passionnants
-- Faites glisser les blocs pour les fusionner dans des pièces avancées
-- Construire une voiture complète!
-- Voyagez plusieurs fois de la première voiture à la dernière voiture de sport!
+Un gameplay simple et des défis passionnants
+- Faites glisser les blocs pour les fusionner dans des parties avancées
+- Construis une voiture complète!
+- Parcourez plusieurs fois de la première voiture à la dernière voiture de sport !!
 
-Gazouillement
 https://twitter.com/Cars2048

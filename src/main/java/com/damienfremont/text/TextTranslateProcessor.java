@@ -1,9 +1,9 @@
-package com.atalantoo.text;
+package com.damienfremont.text;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.batch.item.ItemProcessor;
 
-import com.atalantoo.translator.Translator;
+import com.damienfremont.translator.Translator;
 
 public class TextTranslateProcessor implements ItemProcessor<String, String> {
 

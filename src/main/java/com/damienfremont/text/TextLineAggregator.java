@@ -1,4 +1,4 @@
-package com.atalantoo.text;
+package com.damienfremont.text;
 
 import org.springframework.batch.item.file.transform.LineAggregator;
 

@@ -1,9 +1,9 @@
-package com.atalantoo.html;
+package com.damienfremont.html;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.batch.item.ItemProcessor;
 
-import com.atalantoo.translator.Translator;
+import com.damienfremont.translator.Translator;
 
 public class HtmlTranslateProcessor implements ItemProcessor<String, String> {
 

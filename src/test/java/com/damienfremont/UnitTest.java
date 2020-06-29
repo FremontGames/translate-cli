@@ -1,11 +1,11 @@
-package com.atalantoo;
+package com.damienfremont;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import com.atalantoo.translator.GoogleUIPhantomJS;
-import com.atalantoo.translator.Translator;
+import com.damienfremont.translator.GoogleUIPhantomJS;
+import com.damienfremont.translator.Translator;
 
 public class UnitTest {
 
@@ -28,8 +28,8 @@ public class UnitTest {
 	@Test
 	public void name() throws Exception {
 		Translator translator = new GoogleUIPhantomJS();
-		assertThat(translator.translate("Cars2048", "en", "fr")) //
-				.isEqualTo("Cars2048");
+		assertThat(translator.translate("Cars 2048", "en", "fr")) //
+				.isEqualTo("Voitures 2048");
 	}
 
 
@@ -55,7 +55,7 @@ public class UnitTest {
 		assertThat(translator.translate("Do you really want to quit this application?\n " //
 				+ "The current game will not be saved.", "en", "fr")) //
 						.isEqualTo("Voulez-vous vraiment quitter cette application?\n  "
-								+ "La partie en cours ne sera pas sauvegardée.");
+								+ "La partie en cours ne sera pas enregistrée.");
 	}
 
 	@Test

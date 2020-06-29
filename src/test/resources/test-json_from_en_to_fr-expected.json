@@ -4,5 +4,5 @@
   "CLOSE" : "Fermer",  
   "NEXT_LEVEL" : "Niveau suivant",  
   "BEGINNER" : "Débutant",  
-  "QUITDIALOG_BODY" : "Voulez-vous vraiment quitter cette application?\nLa partie en cours ne sera pas sauvegardée.",  
+  "QUITDIALOG_BODY" : "Voulez-vous vraiment quitter cette application?\nLa partie en cours ne sera pas enregistrée.",  
 }

@@ -1,4 +1,4 @@
-package com.atalantoo;
+package com.damienfremont;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -6,6 +6,8 @@ import java.io.File;
 
 import org.junit.Test;
 import org.springframework.boot.SpringApplication;
+
+import com.damienfremont.BatchConfig;
 
 public class JsonTest {
 

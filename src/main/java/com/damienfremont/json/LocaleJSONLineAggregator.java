@@ -1,4 +1,4 @@
-package com.atalantoo.json;
+package com.damienfremont.json;
 import org.springframework.batch.item.file.transform.LineAggregator;
 
 public class LocaleJSONLineAggregator implements LineAggregator<LocaleJSONLine> {

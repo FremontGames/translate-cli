@@ -1,9 +1,9 @@
-package com.atalantoo.html2text;
+package com.damienfremont.html2text;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.batch.item.ItemProcessor;
 
-import com.atalantoo.translator.Translator;
+import com.damienfremont.translator.Translator;
 
 public class Html2TextTranslateProcessor implements ItemProcessor<String, String> {
 

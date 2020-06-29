@@ -1,4 +1,4 @@
-package com.atalantoo.json;
+package com.damienfremont.json;
 import java.io.IOException;
 import java.io.Writer;
 

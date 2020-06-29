@@ -1,4 +1,4 @@
-package com.atalantoo.translator;
+package com.damienfremont.translator;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,9 +1,9 @@
-package com.atalantoo.json;
+package com.damienfremont.json;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.batch.item.ItemProcessor;
 
-import com.atalantoo.translator.Translator;
+import com.damienfremont.translator.Translator;
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 

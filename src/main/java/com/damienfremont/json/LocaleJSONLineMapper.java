@@ -1,4 +1,4 @@
-package com.atalantoo.json;
+package com.damienfremont.json;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.batch.item.file.LineMapper;
 

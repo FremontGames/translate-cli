@@ -1,4 +1,4 @@
-package com.atalantoo;
+package com.damienfremont;
 
 import org.openqa.selenium.WebDriverException;
 import org.springframework.batch.core.Job;
@@ -14,29 +14,37 @@ import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.batch.item.file.LineMapper;
 import org.springframework.batch.item.file.transform.LineAggregator;
+import org.springframework.batch.support.transaction.ResourcelessTransactionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.transaction.PlatformTransactionManager;
 
-import com.atalantoo.html.HtmlTranslateProcessor;
-import com.atalantoo.html2text.Html2TextTranslateProcessor;
-import com.atalantoo.json.JSONTranslateProcessor;
-import com.atalantoo.json.LocaleJSONFooter;
-import com.atalantoo.json.LocaleJSONHeader;
-import com.atalantoo.json.LocaleJSONLine;
-import com.atalantoo.json.LocaleJSONLineAggregator;
-import com.atalantoo.json.LocaleJSONLineMapper;
-import com.atalantoo.text.TextLineAggregator;
-import com.atalantoo.text.TextLineMapper;
-import com.atalantoo.text.TextTranslateProcessor;
-import com.atalantoo.translator.GoogleUIPhantomJS;
+import com.damienfremont.html.HtmlTranslateProcessor;
+import com.damienfremont.html2text.Html2TextTranslateProcessor;
+import com.damienfremont.json.JSONTranslateProcessor;
+import com.damienfremont.json.LocaleJSONFooter;
+import com.damienfremont.json.LocaleJSONHeader;
+import com.damienfremont.json.LocaleJSONLine;
+import com.damienfremont.json.LocaleJSONLineAggregator;
+import com.damienfremont.json.LocaleJSONLineMapper;
+import com.damienfremont.text.TextLineAggregator;
+import com.damienfremont.text.TextLineMapper;
+import com.damienfremont.text.TextTranslateProcessor;
+import com.damienfremont.translator.GoogleUIPhantomJS;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @EnableBatchProcessing
 public class BatchConfig {
 
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        return new ResourcelessTransactionManager();
+    }
+	
 	// ARGS *********************************************************
 	@Value("${mode}")
 	String mode;

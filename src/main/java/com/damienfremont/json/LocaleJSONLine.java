@@ -1,4 +1,4 @@
-package com.atalantoo.json;
+package com.damienfremont.json;
 
 public class LocaleJSONLine {
 	public String key;

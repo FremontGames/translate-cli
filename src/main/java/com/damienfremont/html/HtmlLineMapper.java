@@ -1,8 +1,8 @@
-package com.atalantoo.text;
+package com.damienfremont.html;
 
 import org.springframework.batch.item.file.LineMapper;
 
-public class TextLineMapper implements LineMapper<String> {
+public class HtmlLineMapper implements LineMapper<String> {
 
 	@Override
 	public String mapLine(String line, int lineNumber) throws Exception {
